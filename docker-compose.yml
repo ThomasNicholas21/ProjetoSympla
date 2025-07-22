@@ -1,0 +1,25 @@
+services:
+  app_sympla:
+    container_name: app_sympla
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app_sympla:/app_sympla
+      - ./data/web/static:/data/web/static/
+      - ./data/web/media:/data/web/media/
+    env_file:
+      - ./dotenv_files/.env
+    depends_on:
+      - project_sympla_psql
+  project_sympla_psql:
+    container_name: project_sympla_psql
+    image: postgres:17-alpine
+    volumes:
+      - ./data/postgres/data:/var/lib/postgresql/data/
+    env_file:
+      - ./dotenv_files/.env
+
+volumes:
+  project_sympla_psql_data:
