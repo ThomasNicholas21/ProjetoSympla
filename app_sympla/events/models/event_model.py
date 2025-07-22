@@ -1,12 +1,5 @@
 from django.db import models
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=128)
-
-
-class Batch(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+from events.models import Category, Batch
 
 
 class Events(models.Model):
