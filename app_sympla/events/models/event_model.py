@@ -1,14 +1,20 @@
 from django.db import models
-from events.models import Category, Batch
+from events.models.category_model import Category
+from events.models.batch_model import Batch
+from events.models.location_model import Location
 
 
 class Events(models.Model):
     name = models.CharField(max_length=128)
     start_date = models.DateTimeField()
-    location = models.TextField()
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     category = models.ManyToManyField(
         Category,
-        null=True,
         blank=True
     )
     sympla_id = models.CharField(max_length=128, unique=True)
