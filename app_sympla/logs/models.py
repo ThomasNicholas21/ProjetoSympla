@@ -12,7 +12,7 @@ class Log(models.Model):
     message = models.TextField()
     imported_amount = models.PositiveIntegerField()
     status = models.CharField(
-        max_length=128,
+        max_length=12,
         choices=(
             ('sucess', 'Sucess'),
             ('error', 'Error'),
