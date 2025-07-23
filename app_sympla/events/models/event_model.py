@@ -4,7 +4,7 @@ from events.models.batch_model import Batch
 from events.models.location_model import Location
 
 
-class Events(models.Model):
+class Event(models.Model):
     name = models.CharField(max_length=128)
     start_date = models.DateTimeField()
     location = models.ForeignKey(
