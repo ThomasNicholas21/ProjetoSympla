@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from events import models
+from events.models import Event, Location, Category, Batch
 from events.services import sympla_service
 from django.utils.timezone import make_aware
 from django.utils.dateparse import parse_datetime
@@ -20,11 +20,11 @@ def home(request):
 
         try:
             events = sympla_service(url, s_token)
-            batch = models.Batch.objects.create()
+            batch = Batch.objects.create()
 
             for event in events:
                 location_data = event['location']
-                location_obj, _ = models.Location.objects.get_or_create(
+                location_obj, _ = Location.objects.get_or_create(
                     location_name=location_data['location_name'],
                     city=location_data['city']
                 )
@@ -36,7 +36,7 @@ def home(request):
                 for category_name in event_category:
                     if category_name:
                         category_obj, _ = (
-                            models.Category.objects.get_or_create(
+                            Category.objects.get_or_create(
                                 name=category_name
                             )
                         )
@@ -44,7 +44,7 @@ def home(request):
 
                 start_date = make_aware(parse_datetime(event['start_date']))
 
-                event_obj = models.Event.objects.create(
+                event_obj = Event.objects.create(
                     name=event['name'],
                     start_date=start_date,
                     location=location_obj,
@@ -61,3 +61,8 @@ def home(request):
             context['error'] = f"Ocorreu um erro: {e}"
 
     return render(request, "events/page/sympla.html", context)
+
+
+def list_view(request):
+    batches = Batch.objects.prefetch_related('event_set__location', 'event_set__category') # noqa
+    return render(request, 'events/page/list_sympla.html', {'batches': batches}) # noqa
