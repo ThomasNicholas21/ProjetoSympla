@@ -6,9 +6,8 @@ class Events(models.Model):
     name = models.CharField(max_length=128)
     start_date = models.DateTimeField()
     location = models.TextField()
-    category = models.ForeignKey(
+    category = models.ManyToManyField(
         Category,
-        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
@@ -16,6 +15,5 @@ class Events(models.Model):
     batch = models.ForeignKey(
         Batch,
         on_delete=models.DO_NOTHING,
-        null=True,
         blank=True,
     )
