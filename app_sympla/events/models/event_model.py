@@ -17,7 +17,7 @@ class Event(models.Model):
         Category,
         blank=True
     )
-    sympla_id = models.CharField(max_length=128, unique=True)
+    sympla_id = models.CharField(max_length=128)
     batch = models.ForeignKey(
         Batch,
         on_delete=models.DO_NOTHING,
