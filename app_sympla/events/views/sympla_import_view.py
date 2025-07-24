@@ -45,9 +45,9 @@ class SymplaImportView(TemplateView):
                     if is_naive(start_date):
                         start_date = make_aware(start_date)
 
-                    last_event = Event.objects.filter(
+                    last_event = Event.objects.get_last_event(
                         sympla_id=event['sympla_id']
-                    ).order_by('-batch__id').first()
+                        )
 
                     if self.should_create_event(
                         last_event,
