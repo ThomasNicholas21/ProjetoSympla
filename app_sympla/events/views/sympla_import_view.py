@@ -1,12 +1,16 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.db import transaction
+from django.utils.timezone import datetime
 from django.utils.timezone import make_aware
-from django.utils.dateparse import parse_datetime
 from django.utils.timezone import is_naive
+from django.utils.dateparse import parse_datetime
+from django.http.request import HttpRequest
+from django.http.response import HttpResponse
 from events.models import Event, Location, Category, Batch
 from events.services import sympla_service
 from logs.models import Log
+from typing import Any
 
 
 URL = "https://api.sympla.com.br/public/v1.5.1/events"
@@ -15,37 +19,46 @@ URL = "https://api.sympla.com.br/public/v1.5.1/events"
 class SymplaImportView(TemplateView):
     template_name = "events/page/sympla.html"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def get_context_data(self, **kwargs) -> dict[Any]:
+        context: dict = super().get_context_data(**kwargs)
         return context
 
-    def post(self, request, *args, **kwargs):
-        context = {}
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        context: dict = {}
 
-        s_token = request.POST.get("s_token") or (
-            'a28e68e547aacfa3426548a989e41e39'
-            'f3db9d43a2cfe0ab4a261eec6f240b39'
-        )
+        s_token: str = request.POST.get("s_token") or (
+                'a28e68e547aacfa3426548a989e41e39'
+                'f3db9d43a2cfe0ab4a261eec6f240b39'
+            )
+        page_size: str = request.POST.get("page_size") or 100
+        page: str = request.POST.get("page") or 1
 
         try:
-            events = sympla_service(URL, s_token=s_token)
-            created_count = 0
+            events: list[dict] = sympla_service(
+                    url=URL,
+                    s_token=s_token,
+                    page_size=int(page_size),
+                    page=int(page)
+                )
+            created_count: int = 0
 
             with transaction.atomic():
-                batch = Batch.objects.create()
+                batch: Batch = Batch.objects.create()
 
                 for event in events:
-                    location = self.get_or_create_location(event['location'])
-                    categories = self.get_or_create_categories(
+                    location: Location = self.get_or_create_location(
+                        event['location']
+                    )
+                    categories: list = self.get_or_create_categories(
                         event.get('category_prim'),
                         event.get('category_sec')
                     )
 
-                    start_date = parse_datetime(event['start_date'])
+                    start_date: datetime = parse_datetime(event['start_date'])
                     if is_naive(start_date):
                         start_date = make_aware(start_date)
 
-                    last_event = Event.objects.get_last_event(
+                    last_event: Event = Event.objects.get_last_event(
                         sympla_id=event['sympla_id']
                         )
 
@@ -56,7 +69,7 @@ class SymplaImportView(TemplateView):
                         location,
                         categories
                     ):
-                        event_object = Event.objects.create(
+                        event_object: Event = Event.objects.create(
                             sympla_id=event['sympla_id'],
                             name=event['name'],
                             start_date=start_date,
@@ -74,28 +87,26 @@ class SymplaImportView(TemplateView):
         except Exception as e:
             context['error'] = f"Ocorreu um erro: {str(e)}"
 
-        Log.objects.create(
+        self.create_log(
             batch=batch,
-            message=context['success'] or context['error'],
-            imported_amount=created_count,
-            status=(
-                'sucess'
-                if context['success']
-                else 'error'
-            )
+            context=context,
+            created_count=created_count
         )
 
         return render(request, self.template_name, context)
 
-    def get_or_create_location(self, location_data):
+    def get_or_create_location(self, location_data: dict[str]) -> Location:
         location, _ = Location.objects.get_or_create(
             location_name=location_data['location_name'],
             city=location_data['city']
         )
         return location
 
-    def get_or_create_categories(self, *category_names):
-        categories = []
+    def get_or_create_categories(
+                self,
+                *category_names: tuple
+            ) -> list[Category]:
+        categories: list = []
         for name in category_names:
             if name:
                 category, _ = Category.objects.get_or_create(name=name)
@@ -103,15 +114,15 @@ class SymplaImportView(TemplateView):
         return categories
 
     def should_create_event(
-                self, last_event,
-                event_data, start_date,
-                location, categories
-            ):
+                self, last_event: Event,
+                event_data: dict, start_date: datetime,
+                location: Location, categories: list
+            ) -> bool:
         if not last_event:
             return True
 
-        current_cat_names = set(c.name for c in categories)
-        last_cat_names = set(
+        current_category_names = set(c.name for c in categories)
+        last_category_names = set(
             last_event.category.values_list(
                 'name', flat=True
                 )
@@ -121,13 +132,13 @@ class SymplaImportView(TemplateView):
             last_event.name != event_data['name'] or
             last_event.start_date != start_date or
             last_event.location != location or
-            current_cat_names != last_cat_names
+            current_category_names != last_category_names
         )
 
     def create_log(
-                self, batch,
-                context, created_count
-            ):
+                self, batch: Batch,
+                context: dict, created_count: int
+            ) -> None:
         Log.objects.create(
             batch=batch,
             message=context['success'] or context['error'],
