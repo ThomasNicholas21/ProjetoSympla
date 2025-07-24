@@ -14,7 +14,7 @@ class Log(models.Model):
     status = models.CharField(
         max_length=12,
         choices=(
-            ('sucess', 'Sucess'),
+            ('success', 'Success'),
             ('error', 'Error'),
         )
     )
