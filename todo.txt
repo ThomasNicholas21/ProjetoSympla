@@ -1,5 +1,6 @@
 #TODO: Fazer testes da views e dos models
 #TODO: Fazer refatoração dos testes caso seja necessário
+#TODO: Validar consumo da API do Sympla e verificar se está condizente com a documentação.
 #TODO: Configurar admin como um todo ( Object Name, Ordenation )
 #TODO: Fazer API dos models
 #TODO: Fazer testes da API (Utilizar viewsets para routers automáticas)
