@@ -1,11 +1,12 @@
 from django.core.exceptions import ValidationError
 from events.tests.test_base import EventsFixture
+from events.models import Event
 from parameterized import parameterized
 
 
-class TestCategoryModel(EventsFixture):
+class TestEventModel(EventsFixture):
     def setUp(self):
-        self.event = self.create_event()
+        self.event = self.make_event()
         return super().setUp()
 
     @parameterized.expand(
@@ -18,3 +19,14 @@ class TestCategoryModel(EventsFixture):
         setattr(self.event, field, 'Teste' * max_length)
         with self.assertRaises(ValidationError):
             self.event.full_clean()
+
+    def test_event_manager_get_last_event_is_correct(self):
+        for iterator in range(3):
+            self.make_event(
+                name=f'Test-{iterator}',
+            )
+
+        event = Event.objects.filter(name='Test-2').first()
+        last_event = Event.objects.get_last_event('dasdg')
+
+        self.assertEqual(last_event, event)
