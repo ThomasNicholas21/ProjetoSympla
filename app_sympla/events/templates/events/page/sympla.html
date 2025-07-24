@@ -1,35 +1,47 @@
 {% extends 'events/base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2>Importar eventos da Sympla</h2>
+<div class="container mt-5">
+    <h2 class="mb-4">Importar eventos da Sympla</h2>
 
     <form method="POST">
         {% csrf_token %}
-        <div class="form-group">
-            <label for="s_token">Chave da API Sympla:</label>
+
+        <div class="mb-3">
+            <label for="s_token" class="form-label">Chave da API Sympla:</label>
             <input type="text" id="s_token" name="s_token" class="form-control"
-                placeholder="Insira sua chave da API, caso não inserir será utilizada uma que possui eventos fictícios.">
+                placeholder="Insira sua chave da API. Se não inserir, será usada uma com eventos fictícios.">
         </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Importar Eventos</button>
+        <div class="mb-3">
+            <label for="page_size" class="form-label">Quantidade de Eventos na API:</label>
+            <input type="number" id="page_size" name="page_size" class="form-control"
+                placeholder="Ex: 50 (padrão: 100)">
+        </div>
+
+        <div class="mb-3">
+            <label for="page" class="form-label">Página da API:</label>
+            <input type="number" id="page" name="page" class="form-control"
+                placeholder="Ex: 1 (padrão: Página 1)">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Importar Eventos</button>
     </form>
 
     {% if error %}
-    <div class="alert alert-danger mt-3">
+    <div class="alert alert-danger mt-4">
         {{ error }}
     </div>
     {% elif success %}
-    <div class="alert alert-success mt-3">
+    <div class="alert alert-success mt-4">
         {{ success }}
     </div>
     {% endif %}
+
     <div class="mt-4">
         <a href="{% url 'events:list-view' %}" class="btn btn-outline-secondary">
             Ver eventos importados
         </a>
     </div>
 </div>
-
-
 {% endblock %}

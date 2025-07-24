@@ -26,11 +26,13 @@
                     <tbody>
                         {% for evento in batch.event_set.all %}
                         <tr>
-                            <td>{{ evento.name }}</td>
+                            <td>{{ evento.name }}</td> 
                             <td>{{ evento.start_date|date:"d/m/Y H:i" }}</td>
                             <td>
-                                {% if evento.location %}
-                                    {{ evento.location.name }} - {{ evento.location.city }}
+                                {% if evento.location.city and evento.location.location_name == 'Evento Online' %}
+                                    {{ evento.location.location_name }}
+                                {% elif evento.location %}
+                                    {{ evento.location.location_name }} - {{ evento.location.city }}
                                 {% else %}
                                     <em>Não informado</em>
                                 {% endif %}
