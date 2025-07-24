@@ -1,11 +1,11 @@
 from django.urls import path
-from events.views import home, list_view
+from events.views import SymplaImportView, SymplaListView
 
 
 app_name = 'events'
 
 
 urlpatterns = [
-    path('', home, name='home-view'),
-    path('eventos/', list_view, name='list-view'),
+    path('', SymplaImportView.as_view(), name='home-view'),
+    path('eventos/', SymplaListView.as_view(), name='list-view'),
 ]
