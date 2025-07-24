@@ -1,0 +1,62 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="mb-4">
+        <a href="{% url 'events:home-view' %}" class="btn btn-outline-secondary">
+            Voltar para importar novas cargas
+        </a>
+    </div>
+
+    {% if batches %}
+        {% for batch in batches %}
+            <h3 class="mb-3 mt-5">Lista de Eventos Importados - Carga {{ batch.id }}</h3>
+
+            {% if batch.event_set.all %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nome</th>
+                            <th>Data de Início</th>
+                            <th>Local</th>
+                            <th>Categorias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for evento in batch.event_set.all %}
+                        <tr>
+                            <td>{{ evento.name }}</td>
+                            <td>{{ evento.start_date|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                {% if evento.location %}
+                                    {{ evento.location.name }} - {{ evento.location.city }}
+                                {% else %}
+                                    <em>Não informado</em>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if evento.category.all %}
+                                    <ul class="list-unstyled mb-0">
+                                        {% for cat in evento.category.all %}
+                                            <li>{{ cat.name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <em>Sem categoria</em>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <div class="alert alert-warning">Nenhum evento encontrado para esta carga.</div>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">Nenhuma carga foi importada ainda.</div>
+    {% endif %}
+</div>
+{% endblock %}

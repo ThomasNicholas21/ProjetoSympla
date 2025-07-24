@@ -1,0 +1,35 @@
+{% extends 'events/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Importar eventos da Sympla</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="s_token">Chave da API Sympla:</label>
+            <input type="text" id="s_token" name="s_token" class="form-control"
+                placeholder="Insira sua chave da API, caso não inserir será utilizada uma que possui eventos fictícios.">
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Importar Eventos</button>
+    </form>
+
+    {% if error %}
+    <div class="alert alert-danger mt-3">
+        {{ error }}
+    </div>
+    {% elif success %}
+    <div class="alert alert-success mt-3">
+        {{ success }}
+    </div>
+    {% endif %}
+    <div class="mt-4">
+        <a href="{% url 'events:list-view' %}" class="btn btn-outline-secondary">
+            Ver eventos importados
+        </a>
+    </div>
+</div>
+
+
+{% endblock %}
