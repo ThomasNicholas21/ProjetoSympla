@@ -2,11 +2,11 @@
 
 ## Tecnologia  
 
-As tecnologias utilizadas foram selecionadas por serem de conhecimento técnico do desenvolvedor e, como o objetivo era entregar uma aplicação robusta e funcional, que fosse escalável de forma rápida, optou-se pela linguagem *Python* e pelas frameworks *Django* e *Django Rest Framework*.  
+As tecnologias utilizadas foram selecionadas por serem de conhecimento técnico do desenvolvedor e, como o objetivo era entregar uma aplicação funcional, que fosse escalável de forma rápida, optou-se pela linguagem *Python* e pelas frameworks *Django* e *Django Rest Framework*.  
 
 Além disso, foi utilizado o banco de dados relacional *PostgreSQL* por possuir uma ótima integração com a framework utilizada e também por sua excelente escalabilidade em nível corporativo. Para a configuração do ambiente, foi utilizada a ferramenta *Docker* e *Docker-Compose*, devido à sua praticidade e isolamento de dependências.  
 
-- **Python**: A linguagem é robusta e possui diversas bibliotecas úteis, que auxiliam na criação de pipelines, inteligência artificial, leitura de PDFs, entre outros. Tendo isso em vista, ela foi escolhida devido ao conhecimento técnico do desenvolvedor e às suas funcionalidades. Neste projeto, foram utilizadas as seguintes bibliotecas:  
+- **Python**: A linguagem possui diversas bibliotecas úteis, que auxiliam na criação de pipelines, inteligência artificial, leitura de PDFs, entre outros. Tendo isso em vista, ela foi escolhida devido ao conhecimento técnico do desenvolvedor e às suas funcionalidades. Neste projeto, foram utilizadas as seguintes bibliotecas:  
     - **requests**: Essa biblioteca permite o consumo de APIs, oferecendo diversos métodos e formas de interação com o serviço. Ela foi utilizada em *app_sympla/events/service.py*, possibilitando a interação com a *API Sympla*, incluindo autenticação, paginação e tratamento de erros (foram utilizadas as exceções da biblioteca, mas convertidas em exceções nativas do Python). O serviço foi modularizado em uma função responsável por consumir os dados da *API* e tratar erros, chamada *sympla_service*, além de uma função complementar para normalização e tratamento dos dados, chamada *normalize_data*.  
 
     - **python-dotenv**: Essa biblioteca realiza a leitura de chaves e valores de um arquivo *.env*. Ela foi utilizada para ler as variáveis de ambiente declaradas no *.env* da aplicação. Dessa forma, tanto o *Python* quanto a framework *Django* reconhecem essas configurações, sendo carregadas nos seguintes arquivos: *project/settings.py*, *project/asgi.py*, *project/wsgi.py* e *app_sympla/manage.py*. Esses arquivos foram escolhidos por serem responsáveis pela configuração geral da aplicação.  

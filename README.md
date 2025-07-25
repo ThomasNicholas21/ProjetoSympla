@@ -74,6 +74,7 @@ docker-compose run --rm app_sympla python manage.py createsuperuser
 ### 5. Acessar a Aplicação
 - **Frontend**: `http://localhost:8000`
 - **Admin**: `http://localhost:8000/admin`
+- **Swagger** `http://127.0.0.1:8000/api/schema/swagger-ui/`
 
 ## Como executar testes
 ```bash
