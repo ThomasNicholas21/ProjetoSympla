@@ -27,6 +27,7 @@ Este projeto tem como objetivo criar uma pipeline de dados, para que ocorra a in
 - 👉 [estrutura da pipeline](https://github.com/ThomasNicholas21/ProjetoSympla/blob/main/docs/pipeline_structure/pipeline.md)
 - 👉 [modelagem de dados](https://github.com/ThomasNicholas21/ProjetoSympla/blob/main/docs/data_modeling/model.md)
 - 👉 [futura implementações](https://github.com/ThomasNicholas21/ProjetoSympla/blob/main/docs/future_implementations/future.md)
+- 👉 [documentação API](https://github.com/ThomasNicholas21/ProjetoSympla/tree/main/docs/api)
 
 ## Como Executar o Projeto
 
@@ -80,6 +81,16 @@ docker-compose run --rm app_sympla python manage.py createsuperuser
 ```bash
 docker-compose run --rm app_sympla python manage.py tests
 ```
+Como gerar coverage de teste:
+```bash
+docker-compose run --rm app_sympla coverage run manage.py tests
+```
+Gerando HTML do coverage de teste:
+```bash
+docker-compose run --rm app_sympla coverage html
+```
+Possível acessar o HTML abrindo em um navegado, o arquivo está neste caminho:
+`app_sympla\htmlcov\index.html`
 
 ## Autor
 Projeto desenvolvido por **Thomas Nicholas**.
