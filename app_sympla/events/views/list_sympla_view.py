@@ -8,3 +8,4 @@ class SymplaListView(ListView):
     context_object_name = 'batches'
     queryset = Batch.objects.prefetch_location_and_category_set()
     ordering = '-id'
+    paginate_by = 3
