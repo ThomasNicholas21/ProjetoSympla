@@ -31,3 +31,6 @@ class Event(models.Model):
         on_delete=models.DO_NOTHING,
         blank=True,
     )
+
+    def __str__(self):
+        return self.name

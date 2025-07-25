@@ -11,3 +11,6 @@ class BatchManager(models.Manager):
 class Batch(models.Model):
     objects = BatchManager()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Versão: {self.pk}'
