@@ -30,3 +30,13 @@ class TestEventModel(EventsFixture):
         last_event = Event.objects.get_last_event('dasdg')
 
         self.assertEqual(last_event, event)
+
+    def test_event_str_method(self):
+        self.event.name = 'Testing __str__'
+        self.event.full_clean()
+        self.event.save()
+
+        self.assertEqual(
+            str(self.event),
+            'Testing __str__'
+        )

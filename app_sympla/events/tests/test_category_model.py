@@ -11,3 +11,13 @@ class TestCategoryModel(EventsFixture):
         setattr(self.category, 'name', 'Test' * 128)
         with self.assertRaises(ValidationError):
             self.category.full_clean()
+
+    def test_category_str_method(self):
+        self.category.name = 'Testing __str__'
+        self.category.full_clean()
+        self.category.save()
+
+        self.assertEqual(
+            str(self.category),
+            'Testing __str__'
+        )

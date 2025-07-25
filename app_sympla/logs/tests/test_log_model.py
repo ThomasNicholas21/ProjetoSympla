@@ -11,3 +11,12 @@ class TestLogModel(LogFixture):
         setattr(self.log, 'status', 'Test' * 12)
         with self.assertRaises(ValidationError):
             self.log.full_clean()
+
+    def test_log_str_method(self):
+        self.log.full_clean()
+        self.log.save()
+
+        self.assertEqual(
+            str(self.log),
+            f'Log: da carga {self.log.batch.pk}'
+        )

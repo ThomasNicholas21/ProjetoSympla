@@ -18,3 +18,13 @@ class TestLocationModel(EventsFixture):
         setattr(self.location, field, 'Teste' * max_length)
         with self.assertRaises(ValidationError):
             self.location.full_clean()
+
+    def test_location_str_method(self):
+        self.location.location_name = 'Testing __str__'
+        self.location.full_clean()
+        self.location.save()
+
+        self.assertEqual(
+            str(self.location),
+            'Testing __str__'
+        )
