@@ -1,9 +1,16 @@
 from django.urls import path
-from events.views import SymplaImportView, SymplaListView, EventAPIView
+from rest_framework.routers import DefaultRouter
+from events.views import (
+    SymplaImportView,
+    SymplaListView,
+    EventAPIView,
+    CsvAPIView
+)
 
 
 app_name = 'events'
-
+router = DefaultRouter()
+router.register(r'eventos/dump/v1/api', CsvAPIView, basename='csv')
 
 urlpatterns = [
     path('', SymplaImportView.as_view(), name='home-view'),
@@ -15,4 +22,5 @@ urlpatterns = [
             'get': 'list'
         }
     ), name='event-api-view'),
+    *router.urls,
 ]
