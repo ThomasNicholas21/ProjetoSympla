@@ -40,7 +40,7 @@ class TestLogAPIView(LogFixture):
         response = self.client.get(self.url + '?page=999')
         self.assertEqual(response.status_code, 404)
 
-    def test_list_view_returns_paginated_response(self):
+    def test_log_api_view_returns_paginated_response(self):
         for iterator in range(6):
             self.create_log(
                 message='Log de teste 3',
@@ -54,7 +54,7 @@ class TestLogAPIView(LogFixture):
         self.assertIn("results", response.data)
         self.assertEqual(len(response.data["results"]), 5)
 
-    def test_list_view_returns_non_paginated_data_when_page_is_none(self):
+    def test_log_api_view_returns_non_paginated_data_when_page_is_none(self):
         class NoPaginationView(LogAPIView):
             pagination_class = None
 
