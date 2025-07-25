@@ -14,13 +14,13 @@ class LogFixture(TestCase):
         batch=None,
         message='Test',
         imported_amount=10,
-        status='sucess',
+        status='success',
     ):
         if batch is None:
             batch = self.make_batch()
 
         return models.Log.objects.create(
-            batch=None,
+            batch=batch,
             message=message,
             imported_amount=imported_amount,
             status=status,
