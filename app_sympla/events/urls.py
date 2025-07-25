@@ -10,9 +10,9 @@ urlpatterns = [
     path('eventos/', SymplaListView.as_view(), name='list-view'),
 
     # api view
-    path('eventos/v1/api/', EventAPIView.as_view(
+    path('eventos/public/v1/api/', EventAPIView.as_view(
         {
             'get': 'list'
         }
-    ), name='api-view'),
+    ), name='event-api-view'),
 ]

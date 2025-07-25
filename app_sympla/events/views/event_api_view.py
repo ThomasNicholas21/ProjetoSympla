@@ -21,11 +21,11 @@ class EventPagination(PageNumberPagination):
 
 @extend_schema_view(
     list=extend_schema(
-        summary="Listar eventos",
+        summary='Listar eventos',
         description=(
-            "Retorna uma lista paginada de eventos, podendo ser "
-            "filtrada por batch, nome e data de início. Além disso, "
-            "tem params para paginação, sendo elas, page e page_size."
+            'Retorna uma lista paginada de eventos, podendo ser '
+            'filtrada por batch, nome e data de início. Além disso, '
+            'tem params para paginação, sendo elas, page e page_size.'
         ),
         parameters=[
             OpenApiParameter(
@@ -52,7 +52,8 @@ class EventPagination(PageNumberPagination):
                 location=OpenApiParameter.QUERY,
                 description=(
                     'Filtro por nome '
-                    '(contém, insensível a maiúsculas/minúsculas)'
+                    '(case insensitive, aceita letras '
+                    'maiúsculas e minúsculas)'
                 ),
             ),
             OpenApiParameter(

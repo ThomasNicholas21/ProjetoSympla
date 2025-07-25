@@ -13,11 +13,11 @@ from logs.models import Log
 from typing import Any
 
 
-URL = "https://api.sympla.com.br/public/v1.5.1/events"
+URL = 'https://api.sympla.com.br/public/v1.5.1/events'
 
 
 class SymplaImportView(TemplateView):
-    template_name = "events/page/sympla.html"
+    template_name = 'events/page/sympla.html'
 
     def get_context_data(self, **kwargs) -> dict[Any]:
         context: dict = super().get_context_data(**kwargs)
@@ -26,12 +26,12 @@ class SymplaImportView(TemplateView):
     def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         context: dict = {}
 
-        s_token: str = request.POST.get("s_token") or (
+        s_token: str = request.POST.get('s_token') or (
                 'a28e68e547aacfa3426548a989e41e39'
                 'f3db9d43a2cfe0ab4a261eec6f240b39'
             )
-        page_size: str = request.POST.get("page_size") or 100
-        page: str = request.POST.get("page") or 1
+        page_size: str = request.POST.get('page_size') or 100
+        page: str = request.POST.get('page') or 1
 
         try:
             events: list[dict] = sympla_service(
@@ -80,12 +80,12 @@ class SymplaImportView(TemplateView):
                         created_count += 1
 
             if created_count:
-                context['success'] = f"{created_count} evento(s) importado(s)!"
+                context['success'] = f'{created_count} evento(s) importado(s)!'
             else:
-                context['success'] = "Nenhum evento novo para importar."
+                context['success'] = 'Nenhum evento novo para importar.'
 
         except Exception as e:
-            context['error'] = f"Ocorreu um erro: {str(e)}"
+            context['error'] = f'Ocorreu um erro: {str(e)}'
 
         self.create_log(
             batch=batch,
