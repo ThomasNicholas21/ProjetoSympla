@@ -4,7 +4,7 @@ from logs.tests.test_base import LogFixture
 
 class TestLogModel(LogFixture):
     def setUp(self):
-        self.log = self.create_log()
+        self.log = self.make_log()
         return super().setUp()
 
     def test_log_status_max_length(self):

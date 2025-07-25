@@ -101,3 +101,59 @@ class TestSymplaImportView(EventsFixture):
 
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, "evento(s) importado(s)")
+
+    def test_sympla_import_should_create_event_true(self):
+        with patch(
+            'events.views.sympla_service'
+            ) as mock_sympla_service, \
+             patch.object(
+                SymplaImportView,
+                'should_create_event',
+                return_value=True
+        ):
+
+            mock_sympla_service.return_value = [
+                {
+                    "name": "Evento Teste",
+                    "start_date": "2025-12-31T12:30:00",
+                    "location": {
+                        "location_name": "Test-Location",
+                        "city": "Test-City"
+                    },
+                    "category_prim": "Tech",
+                    "category_sec": "Python",
+                    "sympla_id": "event123"
+                }
+            ]
+
+            response = self.client.post(reverse('events:home-view'), data={})
+
+            self.assertEqual(response.status_code, 200)
+
+    def test_sympla_import_should_create_event_false(self):
+        with patch(
+            'events.views.sympla_service'
+            ) as mock_sympla_service, \
+            patch.object(
+                SymplaImportView,
+                'should_create_event',
+                return_value=False
+        ):
+
+            mock_sympla_service.return_value = [
+                {
+                    "name": "Evento Teste",
+                    "start_date": "2025-12-31T12:30:00",
+                    "location": {
+                        "location_name": "Test-Location",
+                        "city": "Test-City"
+                    },
+                    "category_prim": "Tech",
+                    "category_sec": "Python",
+                    "sympla_id": "event123"
+                }
+            ]
+
+            response = self.client.post(reverse('events:home-view'), data={})
+
+            self.assertEqual(response.status_code, 200)

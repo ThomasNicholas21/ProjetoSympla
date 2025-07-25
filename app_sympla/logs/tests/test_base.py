@@ -9,7 +9,7 @@ class LogFixture(TestCase):
     def make_batch(self):
         return models.Batch.objects.create()
 
-    def create_log(
+    def make_log(
         self,
         batch=None,
         message='Test',

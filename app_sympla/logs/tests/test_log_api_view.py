@@ -8,12 +8,12 @@ from logs.views import LogAPIView
 class TestLogAPIView(LogFixture):
     def setUp(self):
         self.url = reverse('logs:log-api-view')
-        self.log_1 = self.create_log(
+        self.log_1 = self.make_log(
             message='Log de teste 1',
             imported_amount=3,
             status='success'
         )
-        self.log_2 = self.create_log(
+        self.log_2 = self.make_log(
             message='Log de teste 2',
             imported_amount=5,
             status='error'
@@ -42,7 +42,7 @@ class TestLogAPIView(LogFixture):
 
     def test_log_api_view_returns_paginated_response(self):
         for iterator in range(6):
-            self.create_log(
+            self.make_log(
                 message='Log de teste 3',
                 imported_amount=3,
                 status='success'
