@@ -1,9 +1,10 @@
-#TODO: Fazer testes da views e dos models
-#TODO: Fazer refatoração dos testes caso seja necessário
-#TODO: Validar consumo da API do Sympla e verificar se está condizente com a documentação.
-#TODO: Configurar admin como um todo ( Object Name, Ordenation )
-#TODO: Fazer API dos models
-#TODO: Fazer testes da API (Utilizar viewsets para routers automáticas)
-#TODO: Fazer documentação da API usando SWAGGER ( Quando finalizado criar URL nos templates para encaminhar para o swagger )
-#TODO: Fazer documentação do projeto como um todo ( Construção dos models, views, templates, tecnologia, modelagem de dados, ... )
-#TODO: Se sobrar tempo fazer paginação tanto do template quanto da API
+#TODO: Fazer testes da views e dos models ✅ - (Falta algumas questões do sympla_import_view)
+#TODO: Fazer refatoração dos testes caso seja necessário  ✅ - (Falta algumas questões do sympla_import_view)
+#TODO: Validar consumo da API do Sympla e verificar se está condizente com a documentação. ✅
+#TODO: Configurar admin como um todo ( Object Name, Ordenation ) 🔴
+#TODO: Fazer API dos models ✅
+#TODO: Fazer testes da API ✅
+#TODO: Fazer documentação da API usando SWAGGER ✅
+#TODO: Fazer documentação do projeto como um todo ( Construção dos models, views, templates, tecnologia, modelagem de dados, ... ) 🔴
+#TODO: Se sobrar tempo fazer paginação tanto do template quanto da API ✅
+#TODO: Testar API 🔴
