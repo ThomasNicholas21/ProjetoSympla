@@ -10,3 +10,7 @@ class TestUrl(EventsFixture):
     def test_list_view_url(self):
         list_view_url = reverse('events:list-view')
         self.assertEqual(list_view_url, '/eventos/')
+
+    def test_event_api_view(self):
+        list_view_url = reverse('events:event-api-view')
+        self.assertEqual(list_view_url, '/eventos/public/v1/api/')
