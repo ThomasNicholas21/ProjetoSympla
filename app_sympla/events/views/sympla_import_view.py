@@ -2,8 +2,6 @@ from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.db import transaction
 from django.utils.timezone import datetime
-from django.utils.timezone import make_aware
-from django.utils.timezone import is_naive
 from django.utils.dateparse import parse_datetime
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
@@ -55,8 +53,6 @@ class SymplaImportView(TemplateView):
                     )
 
                     start_date: datetime = parse_datetime(event['start_date'])
-                    if is_naive(start_date):
-                        start_date = make_aware(start_date)
 
                     last_event: Event = Event.objects.get_last_event(
                         sympla_id=event['sympla_id']
