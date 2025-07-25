@@ -2,7 +2,7 @@ from django.urls import path
 from logs.views import LogAPIView
 
 
-app_name = 'log'
+app_name = 'logs'
 
 
 urlpatterns = [
